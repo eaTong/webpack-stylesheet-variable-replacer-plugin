@@ -65,7 +65,7 @@ window.replaceStyleVariable = function (replaceVariables) {
     style.id = unionId;
     document.head.appendChild(style);
   }
-  for (var key in replaceVariables) {
+  for (var key in option) {
     var reg = new RegExp('VARIABLE_REPLACE_' + key+'\\\\b', 'g');
     str = str.replace(reg, option[key]);
   }
