@@ -1,9 +1,14 @@
 {
   "name": "webpack-variable-replacer-plugin",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.2",
+  "description": "easy to change css variable with only one function",
   "main": "src/index.js",
-  "keywords": [],
+  "keywords": [
+    "variable",
+    "webpack",
+    "replace",
+    "plugin"
+  ],
   "author": "eaTong",
   "license": "ISC"
 }
