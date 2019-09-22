@@ -1,5 +1,7 @@
 ## webpack-variable-replacer-plugin
-easy to change css variable with only one function:`window.replaceVariable`
+easy to change css variable with only one function:`window.replaceVariable`,
+config example:
+[react-starter](https://github.com/eaTong/react-starter)
 
 ### how to (3 steps)
 
