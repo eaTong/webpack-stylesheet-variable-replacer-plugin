@@ -1,4 +1,4 @@
-const {extractVariableSelection} = require('../src/utils');
+const {extractVariableSelection, getScriptTemplate} = require('../src/utils');
 
 const cssStyle = `
 * {
@@ -25,17 +25,17 @@ const cssStyle = `
 }
 
 .example-line .display.border {
-  border: 1px solid #345678
+  border: 1px solid #345678;
 }
 
 .example-line .display.background {
-  background-color: rgba(0, 0, 0, .15);
+  background-color: rgba(0, 0, 0, 0.15);
   color: #fff
 }
 `;
 
-console.log(extractVariableSelection(cssStyle, {
+console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
   main: '#456789',
   border: '1px solid #345678',
   background: 'rgba(0, 0, 0, 0.15)'
-}));
+})));

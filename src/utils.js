@@ -39,7 +39,7 @@ function reverseKeyValue(obj) {
 }
 
 function getVariablesReg(colors) {
-  return new RegExp(colors.map(i => `(${i.replace(/\s/g, ' ?').replace(/\(/g, `\\(`).replace(/\)/g, `\\)`).replace(/0?\./g, `\\.`)})`).join('|'));
+  return new RegExp(colors.map(i => `(${i.replace(/\s/g, ' ?').replace(/\(/g, `\\(`).replace(/\)/g, `\\)`).replace(/0?\./g, `0?\\.`)})`).join('|'));
 }
 
 function combineRegs(decorator = '', ...args) {
