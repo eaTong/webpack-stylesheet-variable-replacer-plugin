@@ -1,7 +1,7 @@
 'use strict';
 const {extractVariableSelection, getScriptTemplate} = require('./utils');
 const defaultOption = {
-  fileName: 'webpack-variable-replacer.js',
+  fileName: 'webpack-variable-replacer-[hash].js',
   matchVariables: {},
   publicPath: '',
   htmlFileName: 'index.html',
@@ -25,7 +25,7 @@ class VariableReplacer {
         }
       });
       const {fileName, buildPath} = this.options;
-      const output = `${buildPath}${fileName}`;
+      const output = `${buildPath}${fileName}`.replace('[hash]', compilation.hash);
       templateString = getScriptTemplate(matchVariables, templateString);
       compilation.assets[output] = {
         source: () => templateString,
