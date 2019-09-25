@@ -9,6 +9,14 @@
     "replace",
     "plugin"
   ],
-  "author": "eaTong",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eaTong/webpack-variable-replacer-plugin.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eaTong/webpack-variable-replacer-plugin/issues"
+  },
+  "homepage": "https://github.com/eaTong/webpack-variable-replacer-plugin#readme",
+  "author": "eaTong"
 }
