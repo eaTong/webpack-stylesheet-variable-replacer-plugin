@@ -67,7 +67,7 @@ function getScriptTemplate(matchVariables, styleStr) {
         document.head.appendChild(style);
       }
       for (var key in option) {
-        var reg = new RegExp('VARIABLE_REPLACE_' + key+'\\\\\\\\b', 'g');
+        var reg = new RegExp('VARIABLE_REPLACE_' + key+'\\\\b', 'g');
         str = str.replace(reg, option[key]);
       }
       style.innerText = str;
