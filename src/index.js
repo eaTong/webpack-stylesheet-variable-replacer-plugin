@@ -39,7 +39,7 @@ class VariableReplacer {
   injectToHTML(compilation) {
     const {publicPath, fileName, htmlFileName} = this.options;
     const htmlAsset = compilation.getAsset(htmlFileName);
-    const htmlTemp = htmlAsset.source.source().replace(`</body>`, `<script type="text/javascript" src="${publicPath + fileName}"></script></body>`);
+    const htmlTemp = htmlAsset.source.source().replace(`</body>`, `<script type="text/javascript" src="${`${publicPath}${fileName}`.replace('[hash]', compilation.hash)}"></script></body>`);
     compilation.assets[htmlFileName] = {
       source: () => htmlTemp,
       size: () => htmlTemp.length
