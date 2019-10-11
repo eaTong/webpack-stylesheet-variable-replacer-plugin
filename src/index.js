@@ -21,7 +21,7 @@ class VariableReplacer {
       Object.keys(assets).forEach((key) => {
         if (/\.css$/.test(key)) {
           const styleAsset = assets[key];
-          templateString += extractVariableSelection(styleAsset.children ? styleAsset.children[0]._value : assets[key]._value, matchVariables);
+          templateString += extractVariableSelection(styleAsset.source(), matchVariables);
         }
       });
       const {fileName, buildPath} = this.options;

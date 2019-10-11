@@ -1,6 +1,6 @@
 {
   "name": "webpack-stylesheet-variable-replacer-plugin",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "easy to change css variable with only one function",
   "main": "src/index.js",
   "keywords": [
