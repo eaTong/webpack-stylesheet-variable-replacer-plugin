@@ -17,9 +17,9 @@ function extractVariableSelection(styles, matchVariables) {
     if (variableReg.test(expression)) {
       const selector = expression.match(/[^{]*/)[0];
       if (/^@.*keyframes/.test(selector)) {
-        allExtractedVariable += `${selector}{${ extractVariableSelection(expression.replace(/[^{]*\{/, '').replace(/}$/, ''), matchVariables)}}`;
+        allExtractedVariable += `${selector}{${extractVariableSelection(expression.replace(/[^{]*\{/, '').replace(/}$/, ''), matchVariables)}}`;
       } else {
-        const colorRules = expression.match(combineRegs('g', RULE_REG, SAFE_EMPTY_REG, CSS_VALUE_REG, variableReg));
+        const colorRules = expression.match(combineRegs('g', '', RULE_REG, SAFE_EMPTY_REG, CSS_VALUE_REG, variableReg));
         if (colorRules) {
           const colorReplaceTemplates = colorRules.map(item => item.replace(variableReg, str => `VARIABLE_REPLACE_${valueKey[str.replace(/\s/g, '').replace(/0?\./, '.')]}`));
           allExtractedVariable += `${selector}{${colorReplaceTemplates.join(';')}}`;
@@ -42,11 +42,11 @@ function getVariablesReg(colors) {
   return new RegExp(colors.map(i => `(${i.replace(/\s/g, ' ?').replace(/\(/g, `\\(`).replace(/\)/g, `\\)`).replace(/0?\./g, `0?\\.`)})`).join('|'));
 }
 
-function combineRegs(decorator = '', ...args) {
+function combineRegs(decorator = '', joinString = '', ...args) {
   const regString = args.map(item => {
     const str = item.toString();
     return `(${str.slice(1, str.length - 1)})`
-  }).join('');
+  }).join(joinString);
   return new RegExp(regString, decorator);
 }
 
@@ -81,4 +81,14 @@ function getScriptTemplate(matchVariables, styleStr) {
 `
 }
 
-module.exports = {extractVariableSelection, getScriptTemplate};
+function getRegExp(val) {
+  if (typeof val === 'string') {
+    return new RegExp(val.replace(/\*/g, '.*').replace(/\./g, '\\.'));
+  } else if (val instanceof Array) {
+    return combineRegs('', '|', ...val.map(item => getRegExp(item)))
+  } else if (val instanceof RegExp) {
+    return val;
+  }
+}
+
+module.exports = {extractVariableSelection, getScriptTemplate, getRegExp};

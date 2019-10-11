@@ -1,4 +1,4 @@
-const {extractVariableSelection, getScriptTemplate} = require('../src/utils');
+const {extractVariableSelection, getScriptTemplate, getRegExp} = require('../src/utils');
 
 const cssStyle = `
 * {
@@ -33,9 +33,12 @@ const cssStyle = `
   color: #fff
 }
 `;
+//
+// console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
+//   main: '#456789',
+//   border: '1px solid #345678',
+//   background: 'rgba(0, 0, 0, 0.15)'
+// })));
 
-console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
-  main: '#456789',
-  border: '1px solid #345678',
-  background: 'rgba(0, 0, 0, 0.15)'
-})));
+
+console.log(getRegExp(['main*.js', 'vendor*', /main.*/]));
