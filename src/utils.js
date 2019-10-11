@@ -52,9 +52,8 @@ function combineRegs(decorator = '', ...args) {
 
 function getScriptTemplate(matchVariables, styleStr) {
   return `
-  (function(window){
-    var unionId = '${Math.random() + new Date().getTime()}';
-    window.replaceStyleVariable = function (replaceVariables) {
+    function replaceStyleVariable(replaceVariables) {
+      var unionId = '${Math.random() + new Date().getTime()}';
       var option = JSON.parse('${JSON.stringify(matchVariables)}');
       for(var key in replaceVariables){
         option[key] = replaceVariables[key];
@@ -71,15 +70,14 @@ function getScriptTemplate(matchVariables, styleStr) {
         str = str.replace(reg, option[key]);
       }
       style.innerText = str;
-    }
+      
     window.resetStyle = function(){
       var style = document.getElementById(unionId);
       if(style){
         document.head.removeChild(style);
       }
     }
-  })(window);
-
+  };
 `
 }
 

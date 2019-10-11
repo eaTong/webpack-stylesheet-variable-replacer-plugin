@@ -1,5 +1,6 @@
 'use strict';
 const {extractVariableSelection, getScriptTemplate} = require('./utils');
+const {ConcatSource} = require("webpack-sources");
 const defaultOption = {
   fileName: 'webpack-variable-replacer-[hash].js',
   matchVariables: {},
@@ -18,32 +19,52 @@ class VariableReplacer {
       const assets = compilation.assets;
       const {matchVariables} = this.options;
       let templateString = '';
-      Object.keys(assets).forEach((key) => {
-        if (/\.css$/.test(key)) {
-          const styleAsset = assets[key];
-          templateString += extractVariableSelection(styleAsset.source(), matchVariables);
-        }
-      });
+      if (compilation.name === 'server' || !this.options.nextSupport) {
+        Object.keys(assets).forEach((key) => {
+          if (/\.css$/.test(key)) {
+            const styleAsset = assets[key];
+            templateString += extractVariableSelection(styleAsset.source(), matchVariables);
+          }
+        });
+        global.templateString = templateString;
+      } else {
+        templateString = global.templateString;
+      }
       const {fileName, buildPath} = this.options;
       const output = `${buildPath}${fileName}`.replace('[hash]', compilation.hash);
-      templateString = getScriptTemplate(matchVariables, templateString);
+      const resolvedTemplateString = getScriptTemplate(matchVariables, templateString);
       compilation.assets[output] = {
-        source: () => templateString,
-        size: () => templateString.length
+        source: () => resolvedTemplateString,
+        size: () => resolvedTemplateString.length
       };
-      this.injectToHTML(compilation);
+      this.injectToHTML(compilation, resolvedTemplateString);
       callback();
     });
   }
 
-  injectToHTML(compilation) {
-    const {publicPath, fileName, htmlFileName} = this.options;
-    const htmlAsset = compilation.getAsset(htmlFileName);
-    const htmlTemp = htmlAsset.source.source().replace(`</body>`, `<script type="text/javascript" src="${`${publicPath}${fileName}`.replace('[hash]', compilation.hash)}"></script></body>`);
-    compilation.assets[htmlFileName] = {
-      source: () => htmlTemp,
-      size: () => htmlTemp.length
+  injectToHTML(compilation, templateString) {
+    var onlyEntrypoints = {
+      entrypoints: true,
+      errorDetails: false,
+      modules: false,
+      assets: false,
+      children: false,
+      chunks: false,
+      chunkGroups: false
     }
+    var entrypoints = compilation.getStats().toJson(onlyEntrypoints).entrypoints;
+
+    Object.keys(entrypoints).forEach(entryName => {
+      var entryAssets = entrypoints[entryName].assets;
+      entryAssets.forEach(assetName => {
+        const assetSource = compilation.assets[assetName];
+        if (!assetSource._hasInjected) {
+          const resolvedSource = new ConcatSource(assetSource, templateString);
+          resolvedSource._hasInjected = true;
+          compilation.assets[assetName] = resolvedSource;
+        }
+      })
+    })
   }
 }
 
