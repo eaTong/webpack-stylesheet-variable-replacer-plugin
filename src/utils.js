@@ -2,6 +2,7 @@ const CSS_REG = /[^}]*\{[^{]*\}/g;
 const RULE_REG = /(\w+-)*\w+:/;
 const CSS_VALUE_REG = /(\s?[a-z0-9]+\s)*/;
 const SAFE_EMPTY_REG = /\s?/;
+const IMPORTANT_SAFE_REG = /(!important)?/;
 
 function extractVariableSelection(styles, matchVariables) {
   styles = styles.replace(/\r|\t|\n/g, '');
@@ -19,7 +20,7 @@ function extractVariableSelection(styles, matchVariables) {
       if (/^@.*keyframes/.test(selector)) {
         allExtractedVariable += `${selector}{${extractVariableSelection(expression.replace(/[^{]*\{/, '').replace(/}$/, ''), matchVariables)}}`;
       } else {
-        const colorRules = expression.match(combineRegs('g', '', RULE_REG, SAFE_EMPTY_REG, CSS_VALUE_REG, variableReg));
+        const colorRules = expression.match(combineRegs('g', '', RULE_REG, SAFE_EMPTY_REG, CSS_VALUE_REG, variableReg, SAFE_EMPTY_REG, IMPORTANT_SAFE_REG));
         if (colorRules) {
           const colorReplaceTemplates = colorRules.map(item => item.replace(variableReg, str => `VARIABLE_REPLACE_${valueKey[str.replace(/\s/g, '').replace(/0?\./, '.')]}`));
           allExtractedVariable += `${selector}{${colorReplaceTemplates.join(';')}}`;

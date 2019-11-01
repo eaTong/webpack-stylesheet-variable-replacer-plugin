@@ -21,7 +21,9 @@ const cssStyle = `
 }
 
 .example-line .display.main {
-  color: #456789
+  color: #456789 !important;
+  background-color: rgba(0, 0, 0, 0.15);
+  
 }
 
 .example-line .display.border {
@@ -34,11 +36,11 @@ const cssStyle = `
 }
 `;
 //
-// console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
-//   main: '#456789',
-//   border: '1px solid #345678',
-//   background: 'rgba(0, 0, 0, 0.15)'
-// })));
+console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
+  main: '#456789',
+  border: '1px solid #345678',
+  background: 'rgba(0, 0, 0, 0.15)'
+})));
 
 
-console.log(getRegExp(['main*.js', 'vendor*', /main.*/]));
+// console.log(getRegExp(['main*.js', 'vendor*', /main.*/]));
