@@ -17,7 +17,8 @@ const cssStyle = `
 }
 
 .example-line .display {
-  flex: 1
+  flex: 1;
+  color:#fff123
 }
 
 .example-line .display.main {
@@ -39,6 +40,7 @@ const cssStyle = `
 console.log(getScriptTemplate(extractVariableSelection(cssStyle, {
   main: '#456789',
   border: '1px solid #345678',
+  color:'#fff',
   background: 'rgba(0, 0, 0, 0.15)'
 })));
 
