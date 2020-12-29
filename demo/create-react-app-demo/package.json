@@ -37,6 +37,6 @@
   },
   "devDependencies": {
     "react-app-rewired": "^2.1.8",
-    "webpack-stylesheet-variable-replacer-plugin": "^1.5.1"
+    "webpack-stylesheet-variable-replacer-plugin": "^1.6.0"
   }
 }
