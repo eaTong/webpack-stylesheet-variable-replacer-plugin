@@ -3,6 +3,7 @@ const RULE_REG = /(\w+-)*\w+:/;
 const CSS_VALUE_REG = /(\s?[a-z0-9]+\s)*/;
 const SAFE_EMPTY_REG = /\s?/;
 const IMPORTANT_SAFE_REG = /(!important)?/;
+const CSS_LOADER_EXPORT = /___CSS_LOADER_EXPORT___.push.*\)/g;
 
 function extractVariableSelection(styles, matchVariables) {
   styles = styles.replace(/\r|\t|\n/g, '');
@@ -71,7 +72,7 @@ function getScriptTemplate(matchVariables, styleStr) {
         str = str.replace(reg, option[key]);
       }
       style.innerText = str;
-      
+
     window.resetStyle = function(){
       var style = document.getElementById(unionId);
       if(style){
@@ -92,4 +93,16 @@ function getRegExp(val) {
   }
 }
 
-module.exports = {extractVariableSelection, getScriptTemplate, getRegExp};
+function getStyleFromModule(moduleStr) {
+  if (moduleStr.match(CSS_LOADER_EXPORT)) {
+    const styleArr = moduleStr.match(CSS_LOADER_EXPORT);
+    let totalStyle = '';
+    styleArr.forEach(str => {
+      totalStyle += str.replace(/^___CSS_LOADER_EXPORT___.push[^"]*"/, '').replace(/",.*$/, '');
+    });
+    return totalStyle
+  }
+  return '';
+}
+
+module.exports = {extractVariableSelection, getScriptTemplate, getRegExp, getStyleFromModule};
