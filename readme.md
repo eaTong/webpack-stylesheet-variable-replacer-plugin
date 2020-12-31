@@ -1,5 +1,5 @@
 ## webpack-stylesheet-variable-replacer-plugin
-![http://eatong.oss-cn-beijing.aliyuncs.com/f29b0bd6-3c90-477d-8d77-518c142cf4e9.gif](http://eatong.oss-cn-beijing.aliyuncs.com/f29b0bd6-3c90-477d-8d77-518c142cf4e9.gif)
+![在线换肤效果图](http://eatong.oss-cn-beijing.aliyuncs.com/f29b0bd6-3c90-477d-8d77-518c142cf4e9.gif)
 
 easy to change css variable with only one function:`window.replaceVariable`,
 config example:
