@@ -12,7 +12,6 @@ const defaultOption = {
   excludeEntry: null,
   specifyEntry: null
 };
-
 class VariableReplacer {
   constructor(options) {
     this.options = {...defaultOption, ...options};

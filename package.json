@@ -18,5 +18,8 @@
     "url": "https://github.com/eaTong/webpack-variable-replacer-plugin/issues"
   },
   "homepage": "https://github.com/eaTong/webpack-variable-replacer-plugin#readme",
-  "author": "eaTong"
+  "author": "eaTong",
+  "dependencies": {
+    "webpack-sources": "^2.2.0"
+  }
 }
